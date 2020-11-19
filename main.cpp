@@ -51,6 +51,10 @@ struct CentralProcessingUnit
     void communicateWithRAM();
     void communicateWithMotherboard();
     float processData();
+    ~CentralProcessingUnit()
+    {
+        std::cout << "CentralProcessingUnit Destructor\n";
+    };
 };
 
 void CentralProcessingUnit::communicateWithRAM()
@@ -71,6 +75,10 @@ struct CPUCounter //For #1
 {
     CentralProcessingUnit cpu1;
     int startCounter(int initVal , int maxVal);
+    ~CPUCounter()
+    {
+        std::cout << "CPUCounter Destructor\n";
+    };
 };
 int CPUCounter::startCounter(int initVal, int maxVal)
 {
@@ -90,6 +98,10 @@ struct CPUReset //While #1
 {
     CentralProcessingUnit cpu1;
     std::string reset();
+    ~CPUReset()
+    {
+        std::cout << "CPUReset Destructor\n";
+    };
 };
 
 std::string CPUReset::reset()
@@ -122,7 +134,12 @@ struct Library
     std::string returnBook();
     float chargeLateFee(float lateFee, int numDays);
 
-    std::string buyNewBooks(int numNewBooks); 
+    std::string buyNewBooks(int numNewBooks);
+
+    ~Library()
+    {
+        std::cout << "Library Destructor\n";
+    }; 
 };
 
 Library::Library()
