@@ -31,19 +31,136 @@ Purpose:  This project continues developing Project3.
  8) After you finish, click the [run] button.  Clear up any errors or warnings as best you can.
  
  */
-
+#include <iostream>
 /*
  copied UDT 1:
  */
+struct CentralProcessingUnit
+{
+    int numberOfCores;
+    float clockSpeedInGHz;
+    int l1CacheSize {8};
+    int l2CacheSize {16};
+    int l3CacheSize {32};
 
+    int counter;
+    int resetTimer;
+
+    CentralProcessingUnit(): numberOfCores{8},clockSpeedInGHz {2.8f} {}
+
+    void communicateWithRAM();
+    void communicateWithMotherboard();
+    float processData();
+};
+
+void CentralProcessingUnit::communicateWithRAM()
+{
+    std::cout << "Hi RAM\n";
+}
+void CentralProcessingUnit::communicateWithMotherboard()
+{
+    std::cout << "Hi Motherboard\n";
+}
+float CentralProcessingUnit::processData()
+{
+    float processedData = 1.0f;
+    return processedData;
+}
+
+struct CPUCounter //For #1
+{
+    CentralProcessingUnit cpu1;
+    int startCounter(int initVal , int maxVal);
+};
+int CPUCounter::startCounter(int initVal, int maxVal)
+{
+    for (int i = initVal ; i < maxVal+1 ; i++)
+    {
+        cpu1.counter = i; 
+        std::cout<<cpu1.counter<<"\n";
+        if (cpu1.counter == maxVal)
+            return cpu1.counter;
+    }
+    return 0;
+}   
 /*
  copied UDT 2:
  */
+struct CPUReset //While #1
+{
+    CentralProcessingUnit cpu1;
+    std::string reset();
+};
 
+std::string CPUReset::reset()
+{
+    int i = 0;
+    cpu1.resetTimer = 0;
+    while (i < 10)
+    {
+        cpu1.resetTimer += 1;
+        std::cout << "It has been " << cpu1.resetTimer << " second(s) since reset was initiated" << std::endl;
+        if (cpu1.resetTimer == 10)
+            return "The CPU has been reset";
+    }
+    return "Error while resetting";
+}
 /*
  copied UDT 3:
  */
 
+struct Library
+{
+    Library();
+    int librarianAge;
+    int numEmployees;
+    int numShelves;
+    int numBooks;
+    float lateFees;
+
+    void checkOutBook();
+    std::string returnBook();
+    float chargeLateFee(float lateFee, int numDays);
+
+    std::string buyNewBooks(int numNewBooks); 
+};
+
+Library::Library()
+{
+    librarianAge = 58;
+    numEmployees = 5;
+    numShelves = 50;
+    numBooks = 3000;
+    lateFees = 2.5f;
+}
+
+std::string Library::buyNewBooks (int numNewBooks) //While #2
+{
+    int i = 0;
+    while (i < numNewBooks + 1)
+    { 
+        if (i == numNewBooks)
+            return "We have bought " + std::to_string(numNewBooks) + " new books for our library\n" + "We now have " + std::to_string(numBooks) + " books in our library\n";
+        numBooks++;
+        i++;
+    }
+    return "We didn't buy enough books";
+}
+
+void Library::checkOutBook()
+{
+    std::cout << "Enjoy your book\n";
+}
+
+std::string Library::returnBook()
+{
+    return "Did you enjoy your book?";
+}
+
+float Library::chargeLateFee(float lateFee1, int numDays1)
+{
+    return lateFee1 * numDays1;
+}
 /*
  new UDT 4:
  with 2 member functions
