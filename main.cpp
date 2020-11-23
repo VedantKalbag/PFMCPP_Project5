@@ -37,11 +37,11 @@ Purpose:  This project continues developing Project3.
  */
 struct CentralProcessingUnit
 {
-    CentralProcessingUnit();
+    CentralProcessingUnit(){}
     ~CentralProcessingUnit();
 
     int numberOfCores {8};
-    float clockSpeedInGHz {2.8};
+    float clockSpeedInGHz {2.8f};
     int l1CacheSize {8};
     int l2CacheSize {16};
     int l3CacheSize {32};
@@ -74,14 +74,17 @@ float CentralProcessingUnit::processData()
 
 struct CPUCounter //For #1
 {
-    ~CPUCounter()
-    {
-        std::cout << "CPUCounter Destructor\n";
-    }
+    ~CPUCounter();
 
     CentralProcessingUnit cpu1;
     int startCounter(int initVal , int maxVal);
 };
+
+CPUCounter::~CPUCounter()
+{
+    std::cout << "CPUCounter Destructor\n";
+}
+
 int CPUCounter::startCounter(int initVal, int maxVal)
 {
     for (int i = initVal ; i < maxVal+1 ; i++)
@@ -98,15 +101,16 @@ int CPUCounter::startCounter(int initVal, int maxVal)
  */
 struct CPUReset //While #1
 {
-    ~CPUReset()
-    {
-        std::cout << "CPUReset Destructor\n";
-    }
+    ~CPUReset();
 
     CentralProcessingUnit cpu1;
     std::string reset();
 };
 
+CPUReset::~CPUReset()
+{
+    std::cout << "CPUReset Destructor\n";
+}
 std::string CPUReset::reset()
 {
     int i = 0;
@@ -126,18 +130,8 @@ std::string CPUReset::reset()
 
 struct Library
 {
-    Library()
-    {
-        librarianAge = 58;
-        numEmployees = 5;
-        numShelves = 50;
-        numBooks = 3000;
-        lateFees = 2.5f;
-    }
-    ~Library()
-    {
-        std::cout << "Library Destructor\n";
-    }
+    Library();
+    ~Library();
 
     int librarianAge;
     int numEmployees;
@@ -151,6 +145,20 @@ struct Library
 
     std::string buyNewBooks(int numNewBooks);
 };
+
+Library::Library()
+{
+    librarianAge = 58;
+    numEmployees = 5;
+    numShelves = 50;
+    numBooks = 3000;
+    lateFees = 2.5f;
+}
+
+Library::~Library()
+{
+    std::cout << "Library Destructor\n";
+}
 
 std::string Library::buyNewBooks (int numNewBooks) //While #2
 {
@@ -185,21 +193,25 @@ float Library::chargeLateFee(float lateFee1, int numDays1)
  */
 struct CPUTimer
 {
-    CPUTimer()
-    {
-        timer = 0;
-        std::cout << "CPU Timer Constructor\n";
-    }
-    ~CPUTimer()
-    {
-        std::cout << "CPU Timer Destructor\n";
-    }
+    CPUTimer();
+    ~CPUTimer();
 
     CentralProcessingUnit cpu1;
     int timer;
     std::string startTimer(int maxVal);
     void resetTimer();
 };
+
+CPUTimer::CPUTimer()
+{
+    timer = 0;
+    std::cout << "CPU Timer Constructor\n";
+}
+
+CPUTimer::~CPUTimer()
+{
+    std::cout << "CPU Timer Destructor\n";
+}
 
 std::string CPUTimer::startTimer(int maxVal)
 {
@@ -225,19 +237,22 @@ void CPUTimer::resetTimer()
  */
 struct University
 {
-    University()
-    {
-        std::cout << "University Constructor\n";
-    }
-    ~University()
-    {
-        std::cout << "University Destructor\n";
-    }
+    University();
+    ~University();
 
     Library library1;
     void addNewShelves(int numNewShelves);
     void hireAdditionalStaff(int numStaff);
 };
+
+University::University()
+{
+    std::cout << "University Constructor\n";
+}
+University::~University()
+{
+    std::cout << "University Destructor\n";
+}
 
 void University::addNewShelves(int numNewShelves)
 {
