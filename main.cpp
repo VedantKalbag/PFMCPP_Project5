@@ -31,28 +31,256 @@ Purpose:  This project continues developing Project3.
  8) After you finish, click the [run] button.  Clear up any errors or warnings as best you can.
  
  */
-
+#include <iostream>
 /*
  copied UDT 1:
  */
+struct CentralProcessingUnit
+{
+    CentralProcessingUnit();
+    ~CentralProcessingUnit();
 
+    int numberOfCores {8};
+    float clockSpeedInGHz {2.8f};
+    int l1CacheSize {8};
+    int l2CacheSize {16};
+    int l3CacheSize {32};
+    int counter;
+    int resetTimer;
+
+    void communicateWithRAM();
+    void communicateWithMotherboard();
+    float processData();
+};
+
+CentralProcessingUnit::CentralProcessingUnit()
+{
+    std::cout << "CentralProcessingUnit Constructor\n";
+}
+
+CentralProcessingUnit::~CentralProcessingUnit()
+{
+    std::cout << "CentralProcessingUnit Destructor\n";
+}
+
+void CentralProcessingUnit::communicateWithRAM()
+{
+    std::cout << "Hi RAM\n";
+}
+void CentralProcessingUnit::communicateWithMotherboard()
+{
+    std::cout << "Hi Motherboard\n";
+}
+float CentralProcessingUnit::processData()
+{
+    float processedData = 1.0f;
+    return processedData;
+}
+
+struct CPUCounter //For #1
+{
+    CPUCounter();
+    ~CPUCounter();
+
+    CentralProcessingUnit cpu1;
+    int startCounter(int initVal , int maxVal);
+};
+CPUCounter::CPUCounter()
+{
+    std::cout << "CPUCounter Constructor\n";
+}
+
+CPUCounter::~CPUCounter()
+{
+    std::cout << "CPUCounter Destructor\n";
+}
+
+int CPUCounter::startCounter(int initVal, int maxVal)
+{
+    for (int i = initVal ; i < maxVal+1 ; i++)
+    {
+        cpu1.counter = i; 
+        std::cout << cpu1.counter << "\n";
+        if (cpu1.counter == maxVal)
+            return cpu1.counter;
+    }
+    return 0;
+}   
 /*
  copied UDT 2:
  */
+struct CPUReset //While #1
+{
+    CPUReset();
+    ~CPUReset();
 
+    CentralProcessingUnit cpu1;
+    std::string reset();
+};
+
+CPUReset::CPUReset()
+{
+    std::cout << "CPUReset Constructor\n";
+}
+
+CPUReset::~CPUReset()
+{
+    std::cout << "CPUReset Destructor\n";
+}
+std::string CPUReset::reset()
+{
+    int i = 0;
+    cpu1.resetTimer = 0;
+    while (i < 10)
+    {
+        cpu1.resetTimer += 1;
+        std::cout << "It has been " << cpu1.resetTimer << " second(s) since reset was initiated" << std::endl;
+        if (cpu1.resetTimer == 10)
+            return "The CPU has been reset";
+    }
+    return "Error while resetting";
+}
 /*
  copied UDT 3:
  */
 
+struct Library
+{
+    Library();
+    ~Library();
+
+    int librarianAge;
+    int numEmployees;
+    int numShelves;
+    int numBooks;
+    float lateFees;
+
+    void checkOutBook();
+    std::string returnBook();
+    float chargeLateFee(float lateFee, int numDays);
+
+    std::string buyNewBooks(int numNewBooks);
+};
+
+Library::Library()
+{
+    librarianAge = 58;
+    numEmployees = 5;
+    numShelves = 50;
+    numBooks = 3000;
+    lateFees = 2.5f;
+}
+
+Library::~Library()
+{
+    std::cout << "Library Destructor\n";
+}
+
+std::string Library::buyNewBooks (int numNewBooks) //While #2
+{
+    int i = 0;
+    while (i < numNewBooks + 1)
+    { 
+        if (i == numNewBooks)
+            return "We have bought " + std::to_string(numNewBooks) + " new books for our library\n" + "We now have " + std::to_string(numBooks) + " books in our library\n";
+        numBooks++;
+        i++;
+    }
+    return "We didn't buy enough books";
+}
+
+void Library::checkOutBook()
+{
+    std::cout << "Enjoy your book\n";
+}
+
+std::string Library::returnBook()
+{
+    return "Did you enjoy your book?";
+}
+
+float Library::chargeLateFee(float lateFee1, int numDays1)
+{
+    return lateFee1 * numDays1;
+}
 /*
  new UDT 4:
  with 2 member functions
  */
+struct CPUTimer
+{
+    CPUTimer();
+    ~CPUTimer();
+
+    CentralProcessingUnit cpu1;
+    int timer;
+    std::string startTimer(int maxVal);
+    void resetTimer();
+};
+
+CPUTimer::CPUTimer()
+{
+    timer = 0;
+    std::cout << "CPU Timer Constructor\n";
+}
+
+CPUTimer::~CPUTimer()
+{
+    std::cout << "CPU Timer Destructor\n";
+}
+
+std::string CPUTimer::startTimer(int maxVal)
+{
+    for(timer = 0; timer < maxVal+1; timer++)
+    {
+        std::cout << std::to_string(timer) << "\n";
+        if (timer == maxVal)
+        {
+            return "The timer has reached its max value\n";
+        }
+    }
+    return "";  
+}
+
+void CPUTimer::resetTimer()
+{
+    timer = 0;
+}
 
 /*
  new UDT 5:
  with 2 member functions
  */
+struct University
+{
+    University();
+    ~University();
+
+    Library library1;
+    void addNewShelves(int numNewShelves);
+    void hireAdditionalStaff(int numStaff);
+};
+
+University::University()
+{
+    std::cout << "University Constructor\n";
+}
+University::~University()
+{
+    std::cout << "University Destructor\n";
+}
+
+void University::addNewShelves(int numNewShelves)
+{
+    int booksPerShelf = 30;
+    library1.numShelves += numNewShelves;
+    library1.buyNewBooks(numNewShelves/booksPerShelf);
+}
+
+void University::hireAdditionalStaff(int numStaff)
+{
+    std::cout << "We have hired " << std::to_string(numStaff) << " additional people to help manage the library\n";
+}
 
 /*
  MAKE SURE YOU ARE NOT ON THE MASTER BRANCH
@@ -71,5 +299,7 @@ Purpose:  This project continues developing Project3.
 #include <iostream>
 int main()
 {
+    CPUTimer timer1;
+    University university1;
     std::cout << "good to go!" << std::endl;
 }
