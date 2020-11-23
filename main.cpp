@@ -54,7 +54,7 @@ struct CentralProcessingUnit
     ~CentralProcessingUnit()
     {
         std::cout << "CentralProcessingUnit Destructor\n";
-    };
+    }
 };
 
 void CentralProcessingUnit::communicateWithRAM()
@@ -78,7 +78,7 @@ struct CPUCounter //For #1
     ~CPUCounter()
     {
         std::cout << "CPUCounter Destructor\n";
-    };
+    }
 };
 int CPUCounter::startCounter(int initVal, int maxVal)
 {
@@ -101,7 +101,7 @@ struct CPUReset //While #1
     ~CPUReset()
     {
         std::cout << "CPUReset Destructor\n";
-    };
+    }
 };
 
 std::string CPUReset::reset()
@@ -139,7 +139,7 @@ struct Library
     ~Library()
     {
         std::cout << "Library Destructor\n";
-    }; 
+    }
 };
 
 Library::Library()
@@ -182,11 +182,71 @@ float Library::chargeLateFee(float lateFee1, int numDays1)
  new UDT 4:
  with 2 member functions
  */
+struct CPUTimer
+{
+    CPUTimer()
+    {
+        timer = 0;
+        std::cout << "CPU Timer Constructor\n";
+    }
+    CentralProcessingUnit cpu1;
+    int timer;
+    std::string startTimer(int maxVal);
+    void resetTimer();
+    ~CPUTimer()
+    {
+        std::cout << "CPU Timer Destructor\n";
+    }
+};
+
+std::string CPUTimer::startTimer(int maxVal)
+{
+    for(timer = 0; timer < maxVal+1; timer++)
+    {
+        std::cout << std::to_string(timer) << "\n";
+        if (timer == maxVal)
+        {
+            return "The timer has reached its max value\n";
+        }
+    }
+    return "";  
+}
+
+void CPUTimer::resetTimer()
+{
+    timer = 0;
+}
 
 /*
  new UDT 5:
  with 2 member functions
  */
+struct University
+{
+    University()
+    {
+        std::cout << "University Constructor\n";
+    }
+    Library library1;
+    void addNewShelves(int numNewShelves);
+    void hireAdditionalStaff(int numStaff);
+    ~University()
+    {
+        std::cout << "University Destructor\n";
+    }
+};
+
+void University::addNewShelves(int numNewShelves)
+{
+    int booksPerShelf = 30;
+    library1.numShelves += numNewShelves;
+    library1.buyNewBooks(numNewShelves/booksPerShelf);
+}
+
+void University::hireAdditionalStaff(int numStaff)
+{
+    std::cout << "We have hired " << std::to_string(numStaff) << " additional people to help manage the library\n";
+}
 
 /*
  MAKE SURE YOU ARE NOT ON THE MASTER BRANCH
@@ -205,5 +265,7 @@ float Library::chargeLateFee(float lateFee1, int numDays1)
 #include <iostream>
 int main()
 {
+    CPUTimer timer1;
+    University university1;
     std::cout << "good to go!" << std::endl;
 }
