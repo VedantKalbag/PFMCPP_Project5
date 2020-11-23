@@ -37,7 +37,7 @@ Purpose:  This project continues developing Project3.
  */
 struct CentralProcessingUnit
 {
-    CentralProcessingUnit(){}
+    CentralProcessingUnit();
     ~CentralProcessingUnit();
 
     int numberOfCores {8};
@@ -52,6 +52,11 @@ struct CentralProcessingUnit
     void communicateWithMotherboard();
     float processData();
 };
+
+CentralProcessingUnit::CentralProcessingUnit()
+{
+    std::cout << "CentralProcessingUnit Constructor\n";
+}
 
 CentralProcessingUnit::~CentralProcessingUnit()
 {
