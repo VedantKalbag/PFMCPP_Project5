@@ -79,11 +79,16 @@ float CentralProcessingUnit::processData()
 
 struct CPUCounter //For #1
 {
+    CPUCounter();
     ~CPUCounter();
 
     CentralProcessingUnit cpu1;
     int startCounter(int initVal , int maxVal);
 };
+CPUCounter::CPUCounter()
+{
+    std::cout << "CPUCounter Constructor\n";
+}
 
 CPUCounter::~CPUCounter()
 {
@@ -95,7 +100,7 @@ int CPUCounter::startCounter(int initVal, int maxVal)
     for (int i = initVal ; i < maxVal+1 ; i++)
     {
         cpu1.counter = i; 
-        std::cout<<cpu1.counter<<"\n";
+        std::cout << cpu1.counter << "\n";
         if (cpu1.counter == maxVal)
             return cpu1.counter;
     }
@@ -106,11 +111,17 @@ int CPUCounter::startCounter(int initVal, int maxVal)
  */
 struct CPUReset //While #1
 {
+    CPUReset();
     ~CPUReset();
 
     CentralProcessingUnit cpu1;
     std::string reset();
 };
+
+CPUReset::CPUReset()
+{
+    std::cout << "CPUReset Constructor\n";
+}
 
 CPUReset::~CPUReset()
 {
