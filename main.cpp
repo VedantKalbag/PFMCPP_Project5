@@ -37,14 +37,11 @@ Purpose:  This project continues developing Project3.
  */
 struct CentralProcessingUnit
 {
-    CentralProcessingUnit(): numberOfCores{8},clockSpeedInGHz {2.8f} {}
-    ~CentralProcessingUnit()
-    {
-        std::cout << "CentralProcessingUnit Destructor\n";
-    }
+    CentralProcessingUnit();
+    ~CentralProcessingUnit();
 
-    int numberOfCores;
-    float clockSpeedInGHz;
+    int numberOfCores {8};
+    float clockSpeedInGHz {2.8};
     int l1CacheSize {8};
     int l2CacheSize {16};
     int l3CacheSize {32};
@@ -55,6 +52,11 @@ struct CentralProcessingUnit
     void communicateWithMotherboard();
     float processData();
 };
+
+CentralProcessingUnit::~CentralProcessingUnit()
+{
+    std::cout << "CentralProcessingUnit Destructor\n";
+}
 
 void CentralProcessingUnit::communicateWithRAM()
 {
