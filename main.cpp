@@ -42,15 +42,14 @@ struct CentralProcessingUnit
     int l1CacheSize {8};
     int l2CacheSize {16};
     int l3CacheSize {32};
-
     int counter;
     int resetTimer;
-
-    CentralProcessingUnit(): numberOfCores{8},clockSpeedInGHz {2.8f} {}
 
     void communicateWithRAM();
     void communicateWithMotherboard();
     float processData();
+
+    CentralProcessingUnit(): numberOfCores{8},clockSpeedInGHz {2.8f} {}
     ~CentralProcessingUnit()
     {
         std::cout << "CentralProcessingUnit Destructor\n";
@@ -123,7 +122,6 @@ std::string CPUReset::reset()
 
 struct Library
 {
-    Library();
     int librarianAge;
     int numEmployees;
     int numShelves;
@@ -136,20 +134,19 @@ struct Library
 
     std::string buyNewBooks(int numNewBooks);
 
+    Library()
+    {
+        librarianAge = 58;
+        numEmployees = 5;
+        numShelves = 50;
+        numBooks = 3000;
+        lateFees = 2.5f;
+    }
     ~Library()
     {
         std::cout << "Library Destructor\n";
     }
 };
-
-Library::Library()
-{
-    librarianAge = 58;
-    numEmployees = 5;
-    numShelves = 50;
-    numBooks = 3000;
-    lateFees = 2.5f;
-}
 
 std::string Library::buyNewBooks (int numNewBooks) //While #2
 {
@@ -184,15 +181,17 @@ float Library::chargeLateFee(float lateFee1, int numDays1)
  */
 struct CPUTimer
 {
+    CentralProcessingUnit cpu1;
+    int timer;
+    std::string startTimer(int maxVal);
+    void resetTimer();
+
     CPUTimer()
     {
         timer = 0;
         std::cout << "CPU Timer Constructor\n";
     }
-    CentralProcessingUnit cpu1;
-    int timer;
-    std::string startTimer(int maxVal);
-    void resetTimer();
+
     ~CPUTimer()
     {
         std::cout << "CPU Timer Destructor\n";
@@ -223,13 +222,15 @@ void CPUTimer::resetTimer()
  */
 struct University
 {
+    Library library1;
+    void addNewShelves(int numNewShelves);
+    void hireAdditionalStaff(int numStaff);
+    
     University()
     {
         std::cout << "University Constructor\n";
     }
-    Library library1;
-    void addNewShelves(int numNewShelves);
-    void hireAdditionalStaff(int numStaff);
+
     ~University()
     {
         std::cout << "University Destructor\n";
