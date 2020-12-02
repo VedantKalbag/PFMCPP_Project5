@@ -86,12 +86,12 @@ struct CentralProcessingUnit
 
 CentralProcessingUnit::CentralProcessingUnit()
 {
-    std::cout << "CentralProcessingUnit Constructor\n";
+    //std::cout << "CentralProcessingUnit Constructor\n";
 }
 
 CentralProcessingUnit::~CentralProcessingUnit()
 {
-    std::cout << "CentralProcessingUnit Destructor\n";
+    //std::cout << "CentralProcessingUnit Destructor\n";
 }
 
 void CentralProcessingUnit::communicateWithRAM()
@@ -114,28 +114,28 @@ struct CPUCounter //For #1
     ~CPUCounter();
 
     CentralProcessingUnit cpu1;
-    int startCounter(int initVal , int maxVal);
+    int counter;
+    void startCounter(int initVal , int maxVal);
 };
 CPUCounter::CPUCounter()
 {
-    std::cout << "CPUCounter Constructor\n";
+    //std::cout << "CPUCounter Constructor\n";
 }
 
 CPUCounter::~CPUCounter()
 {
-    std::cout << "CPUCounter Destructor\n";
+   //std::cout << "CPUCounter Destructor\n";
 }
 
-int CPUCounter::startCounter(int initVal, int maxVal)
+void CPUCounter::startCounter(int initVal, int maxVal)
 {
     for (int i = initVal ; i < maxVal+1 ; i++)
     {
-        cpu1.counter = i; 
-        std::cout << cpu1.counter << "\n";
+        this->cpu1.counter = i; 
+        //std::cout << this->cpu1.counter << "\n";
         if (cpu1.counter == maxVal)
-            return cpu1.counter;
+            std::cout << "CPU Counter Max Value: " << this->cpu1.counter << "\n";
     }
-    return 0;
 }   
 /*
  copied UDT 2:
@@ -151,12 +151,12 @@ struct CPUReset //While #1
 
 CPUReset::CPUReset()
 {
-    std::cout << "CPUReset Constructor\n";
+    //std::cout << "CPUReset Constructor\n";
 }
 
 CPUReset::~CPUReset()
 {
-    std::cout << "CPUReset Destructor\n";
+    //std::cout << "CPUReset Destructor\n";
 }
 std::string CPUReset::reset()
 {
@@ -165,7 +165,7 @@ std::string CPUReset::reset()
     while (i < 10)
     {
         cpu1.resetTimer += 1;
-        std::cout << "It has been " << cpu1.resetTimer << " second(s) since reset was initiated" << std::endl;
+        std::cout << "It has been " << this->cpu1.resetTimer << " second(s) since reset was initiated" << std::endl;
         if (cpu1.resetTimer == 10)
             return "The CPU has been reset";
     }
@@ -204,7 +204,7 @@ Library::Library()
 
 Library::~Library()
 {
-    std::cout << "Library Destructor\n";
+    //std::cout << "Library Destructor\n";
 }
 
 std::string Library::buyNewBooks (int numNewBooks) //While #2
@@ -252,21 +252,23 @@ struct CPUTimer
 CPUTimer::CPUTimer()
 {
     timer = 0;
-    std::cout << "CPU Timer Constructor\n";
+    //std::cout << "CPU Timer Constructor\n";
 }
 
 CPUTimer::~CPUTimer()
 {
-    std::cout << "CPU Timer Destructor\n";
+    //std::cout << "CPU Timer Destructor\n";
 }
 
 std::string CPUTimer::startTimer(int maxVal)
 {
     for(timer = 0; timer < maxVal+1; timer++)
     {
-        std::cout << std::to_string(timer) << "\n";
+        //std::cout << std::to_string(this->timer) << "\n";
         if (timer == maxVal)
         {
+            std::cout << "The timer has reached its max value\n";
+            std::cout << "CPU Timer Max Value: " << std::to_string(this->timer) << "\n";
             return "The timer has reached its max value\n";
         }
     }
@@ -294,11 +296,11 @@ struct University
 
 University::University()
 {
-    std::cout << "University Constructor\n";
+    //std::cout << "University Constructor\n";
 }
 University::~University()
 {
-    std::cout << "University Destructor\n";
+    //std::cout << "University Destructor\n";
 }
 
 void University::addNewShelves(int numNewShelves)
@@ -331,6 +333,12 @@ void University::hireAdditionalStaff(int numStaff)
 int main()
 {
     CPUTimer timer1;
+    CPUCounter counter1;
+    counter1.startCounter(0, 10);
+    std::cout << "Starting timer\n";
+    timer1.startTimer(10);
+    std::cout << "CPU Counter Max Value: " << counter1.cpu1.counter << "\n";
+    std::cout << "CPU Timer Value: " << std::to_string(timer1.timer) << "\n";
     University university1;
     std::cout << "good to go!" << std::endl;
 }
