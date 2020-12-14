@@ -286,36 +286,7 @@ void CPUTimer::resetTimer()
  new UDT 5:
  with 2 member functions
  */
-struct University
-{
-    University();
-    ~University();
 
-    Library library1;
-    void addNewShelves(int numNewShelves);
-    void hireAdditionalStaff(int numStaff);
-};
-
-University::University()
-{
-    //std::cout << "University Constructor\n";
-}
-University::~University()
-{
-    //std::cout << "University Destructor\n";
-}
-
-void University::addNewShelves(int numNewShelves)
-{
-    int booksPerShelf = 30;
-    library1.numShelves += numNewShelves;
-    library1.buyNewBooks(numNewShelves/booksPerShelf);
-}
-
-void University::hireAdditionalStaff(int numStaff)
-{
-    std::cout << "We have hired " << std::to_string(numStaff) << " additional people to help manage the library\n";
-}
 
 /*
  MAKE SURE YOU ARE NOT ON THE MASTER BRANCH
@@ -334,13 +305,33 @@ void University::hireAdditionalStaff(int numStaff)
 #include <iostream>
 int main()
 {
-    CPUTimer timer1;
+    CentralProcessingUnit cpu1;
     CPUCounter counter1;
-    int cntrVal = counter1.startCounter(0, 10);
-    //std::cout << "Starting timer\n";
-    int timerVal = timer1.startTimer(10);
-    std::cout << "CPU Counter Max Value: " << cntrVal << "\n";
-    std::cout << "CPU Timer Value: " << timerVal << "\n";
-    University university1;
+    CPUReset rst1;
+    
+    Library library1;
+
+    auto cnt = counter1.startCounter(0,15);
+    std::cout << "cnt.counter: " << cnt << std::endl;
+    
+    auto rst = rst1.reset();
+    std::cout << "Reset message: " << rst << std::endl;
+    
+    
+    std::cout << "CPU communication \n";
+    cpu1.communicateWithRAM();
+    cpu1.communicateWithMotherboard();
+    std::cout << "\n";
+
+    std::cout << "Library Actions: \n";
+    library1.checkOutBook();
+    std::cout << "\n";
+
+    auto msg = library1.buyNewBooks(30);
+    std::cout << msg << std::endl;
+    std::cout << "\n";
+
     std::cout << "good to go!" << std::endl;
+
+    return 0;
 }
