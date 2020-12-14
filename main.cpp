@@ -115,7 +115,7 @@ struct CPUCounter //For #1
 
     CentralProcessingUnit cpu1;
     int counter;
-    void startCounter(int initVal , int maxVal);
+    int startCounter(int initVal , int maxVal);
 };
 CPUCounter::CPUCounter()
 {
@@ -127,7 +127,7 @@ CPUCounter::~CPUCounter()
    //std::cout << "CPUCounter Destructor\n";
 }
 
-void CPUCounter::startCounter(int initVal, int maxVal)
+int CPUCounter::startCounter(int initVal, int maxVal)
 {
     for (int i = initVal ; i < maxVal+1 ; i++)
     {
@@ -136,6 +136,7 @@ void CPUCounter::startCounter(int initVal, int maxVal)
         if (cpu1.counter == maxVal)
             std::cout << "CPU Counter Max Value: " << this->cpu1.counter << "\n";
     }
+    return this->cpu1.counter;
 }   
 /*
  copied UDT 2:
@@ -245,7 +246,7 @@ struct CPUTimer
 
     CentralProcessingUnit cpu1;
     int timer;
-    std::string startTimer(int maxVal);
+    int startTimer(int maxVal);
     void resetTimer();
 };
 
@@ -260,19 +261,20 @@ CPUTimer::~CPUTimer()
     //std::cout << "CPU Timer Destructor\n";
 }
 
-std::string CPUTimer::startTimer(int maxVal)
+int CPUTimer::startTimer(int maxVal)
 {
     for(timer = 0; timer < maxVal+1; timer++)
     {
         //std::cout << std::to_string(this->timer) << "\n";
         if (timer == maxVal)
         {
-            std::cout << "The timer has reached its max value\n";
+            //std::cout << "The timer has reached its max value\n";
             std::cout << "CPU Timer Max Value: " << std::to_string(this->timer) << "\n";
-            return "The timer has reached its max value\n";
+            //std::cout << "The timer has reached its max value\n";
+            return this->timer;
         }
     }
-    return "";  
+    return 0;  
 }
 
 void CPUTimer::resetTimer()
@@ -334,11 +336,11 @@ int main()
 {
     CPUTimer timer1;
     CPUCounter counter1;
-    counter1.startCounter(0, 10);
-    std::cout << "Starting timer\n";
-    timer1.startTimer(10);
-    std::cout << "CPU Counter Max Value: " << counter1.cpu1.counter << "\n";
-    std::cout << "CPU Timer Value: " << std::to_string(timer1.timer) << "\n";
+    int cntrVal = counter1.startCounter(0, 10);
+    //std::cout << "Starting timer\n";
+    int timerVal = timer1.startTimer(10);
+    std::cout << "CPU Counter Max Value: " << cntrVal << "\n";
+    std::cout << "CPU Timer Value: " << timerVal << "\n";
     University university1;
     std::cout << "good to go!" << std::endl;
 }
