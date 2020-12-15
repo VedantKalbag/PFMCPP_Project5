@@ -79,9 +79,15 @@ struct CentralProcessingUnit
     int counter;
     int resetTimer;
 
+    std::string ramMessage = "Hi RAM\n";
+    std::string motherboardMessage = "Hi Motherboard\n";
+
     void communicateWithRAM();
     void communicateWithMotherboard();
     float processData();
+
+    void motherboardCommunication() {std::cout << this-> motherboardMessage;}
+    void ramCommunication() {std::cout << this-> ramMessage;}
 };
 
 CentralProcessingUnit::CentralProcessingUnit()
@@ -318,17 +324,21 @@ int main()
     auto cnt = counter1.startCounter(0,15);
     std::cout << "cnt.counter: " << cnt << std::endl;
     counter1.returnCounterValue();
+    std::cout << "\n";
     
 
     std::cout << "Reset:\n";
     auto rst = rst1.reset();
     std::cout << rst << std::endl;
     rst1.printResetMessage();
+    std::cout << "\n";
     
     std::cout << "CPU communication:\n";
-    //cpu1.communicateWithRAM();
-    //cpu1.communicateWithMotherboard();
-    //std::cout << "\n";
+    cpu1.communicateWithRAM();
+    std::cout << cpu1.ramMessage;
+    cpu1.communicateWithMotherboard();
+    std::cout << cpu1.motherboardMessage;
+    std::cout << "\n";
 
     //std::cout << "Library Actions: \n";
     //library1.checkOutBook();
