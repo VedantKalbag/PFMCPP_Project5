@@ -79,19 +79,25 @@ struct CentralProcessingUnit
     int counter;
     int resetTimer;
 
+    std::string ramMessage = "Hi RAM\n";
+    std::string motherboardMessage = "Hi Motherboard\n";
+
     void communicateWithRAM();
     void communicateWithMotherboard();
     float processData();
+
+    void motherboardCommunication() {std::cout << this-> motherboardMessage;}
+    void ramCommunication() {std::cout << this-> ramMessage;}
 };
 
 CentralProcessingUnit::CentralProcessingUnit()
 {
-    std::cout << "CentralProcessingUnit Constructor\n";
+    //std::cout << "CentralProcessingUnit Constructor\n";
 }
 
 CentralProcessingUnit::~CentralProcessingUnit()
 {
-    std::cout << "CentralProcessingUnit Destructor\n";
+    //std::cout << "CentralProcessingUnit Destructor\n";
 }
 
 void CentralProcessingUnit::communicateWithRAM()
@@ -114,28 +120,31 @@ struct CPUCounter //For #1
     ~CPUCounter();
 
     CentralProcessingUnit cpu1;
+    int counter;
     int startCounter(int initVal , int maxVal);
+    void returnCounterValue() { std::cout << "cnt.counter: " << this->cpu1.counter << std::endl;}
 };
 CPUCounter::CPUCounter()
 {
-    std::cout << "CPUCounter Constructor\n";
+    //std::cout << "CPUCounter Constructor\n";
 }
 
 CPUCounter::~CPUCounter()
 {
-    std::cout << "CPUCounter Destructor\n";
+   //std::cout << "CPUCounter Destructor\n";
 }
 
 int CPUCounter::startCounter(int initVal, int maxVal)
 {
     for (int i = initVal ; i < maxVal+1 ; i++)
     {
-        cpu1.counter = i; 
-        std::cout << cpu1.counter << "\n";
+        this->cpu1.counter = i; 
+        //std::cout << this->cpu1.counter << "\n";
         if (cpu1.counter == maxVal)
-            return cpu1.counter;
+            //std::cout << "CPU Counter Max Value: " << this->cpu1.counter << "\n";
+            return this->cpu1.counter;
     }
-    return 0;
+    return this->cpu1.counter;
 }   
 /*
  copied UDT 2:
@@ -147,16 +156,17 @@ struct CPUReset //While #1
 
     CentralProcessingUnit cpu1;
     std::string reset();
+    void printResetMessage() {std::cout << "The CPU has been reset, it has been " + std::to_string(this->cpu1.resetTimer) + " seconds\n";}
 };
 
 CPUReset::CPUReset()
 {
-    std::cout << "CPUReset Constructor\n";
+    //std::cout << "CPUReset Constructor\n";
 }
 
 CPUReset::~CPUReset()
 {
-    std::cout << "CPUReset Destructor\n";
+    //std::cout << "CPUReset Destructor\n";
 }
 std::string CPUReset::reset()
 {
@@ -165,9 +175,9 @@ std::string CPUReset::reset()
     while (i < 10)
     {
         cpu1.resetTimer += 1;
-        std::cout << "It has been " << cpu1.resetTimer << " second(s) since reset was initiated" << std::endl;
+        //std::cout << "It has been " << this->cpu1.resetTimer << " second(s) since reset was initiated" << std::endl;
         if (cpu1.resetTimer == 10)
-            return "The CPU has been reset";
+            return "The CPU has been reset, it has been " + std::to_string(this->cpu1.resetTimer) + " seconds";
     }
     return "Error while resetting";
 }
@@ -185,12 +195,15 @@ struct Library
     int numShelves;
     int numBooks;
     float lateFees;
+    std::string checkoutMessage;
 
-    void checkOutBook();
+    std::string checkOutBook();
     std::string returnBook();
     float chargeLateFee(float lateFee, int numDays);
 
-    std::string buyNewBooks(int numNewBooks);
+    int buyNewBooks(int numNewBooks);
+    void printCheckoutMessage() {std::cout << this->checkoutMessage << "\n";}
+    void boughtNewBooks() {std::cout << "We now have " << this->numBooks << " books in our library\n";}
 };
 
 Library::Library()
@@ -200,29 +213,31 @@ Library::Library()
     numShelves = 50;
     numBooks = 3000;
     lateFees = 2.5f;
+    checkoutMessage = "Enjoy your book\n";
 }
 
 Library::~Library()
 {
-    std::cout << "Library Destructor\n";
+    //std::cout << "Library Destructor\n";
 }
 
-std::string Library::buyNewBooks (int numNewBooks) //While #2
+int Library::buyNewBooks (int numNewBooks) //While #2
 {
     int i = 0;
     while (i < numNewBooks + 1)
     { 
         if (i == numNewBooks)
-            return "We have bought " + std::to_string(numNewBooks) + " new books for our library\n" + "We now have " + std::to_string(numBooks) + " books in our library\n";
-        numBooks++;
+            return numBooks;
+        this->numBooks++;
         i++;
     }
-    return "We didn't buy enough books";
+    //this->numBooks += numNewBooks;
+    return numBooks;
 }
 
-void Library::checkOutBook()
+std::string Library::checkOutBook()
 {
-    std::cout << "Enjoy your book\n";
+    return this->checkoutMessage;
 }
 
 std::string Library::returnBook()
@@ -245,32 +260,35 @@ struct CPUTimer
 
     CentralProcessingUnit cpu1;
     int timer;
-    std::string startTimer(int maxVal);
+    int startTimer(int maxVal);
     void resetTimer();
 };
 
 CPUTimer::CPUTimer()
 {
     timer = 0;
-    std::cout << "CPU Timer Constructor\n";
+    //std::cout << "CPU Timer Constructor\n";
 }
 
 CPUTimer::~CPUTimer()
 {
-    std::cout << "CPU Timer Destructor\n";
+    //std::cout << "CPU Timer Destructor\n";
 }
 
-std::string CPUTimer::startTimer(int maxVal)
+int CPUTimer::startTimer(int maxVal)
 {
     for(timer = 0; timer < maxVal+1; timer++)
     {
-        std::cout << std::to_string(timer) << "\n";
+        //std::cout << std::to_string(this->timer) << "\n";
         if (timer == maxVal)
         {
-            return "The timer has reached its max value\n";
+            //std::cout << "The timer has reached its max value\n";
+            std::cout << "CPU Timer Max Value: " << std::to_string(this->timer) << "\n";
+            //std::cout << "The timer has reached its max value\n";
+            return this->timer;
         }
     }
-    return "";  
+    return 0;  
 }
 
 void CPUTimer::resetTimer()
@@ -282,37 +300,25 @@ void CPUTimer::resetTimer()
  new UDT 5:
  with 2 member functions
  */
-struct University
-{
-    University();
-    ~University();
 
-    Library library1;
-    void addNewShelves(int numNewShelves);
-    void hireAdditionalStaff(int numStaff);
+struct Phone
+{
+    std::string screenStatus = "Not Broken";
+    std::string dropPhone (bool breakScreen = false);
+
+    void printScreenStatus() {std::cout << "The screen is " << this->screenStatus << "\n";}
 };
 
-University::University()
+std::string Phone::dropPhone (bool breakScreen)
 {
-    std::cout << "University Constructor\n";
+    if (breakScreen)
+    {
+        this->screenStatus = "Broken";
+        return this->screenStatus;
+    }
+    this->screenStatus = "Not Broken";
+    return this->screenStatus;
 }
-University::~University()
-{
-    std::cout << "University Destructor\n";
-}
-
-void University::addNewShelves(int numNewShelves)
-{
-    int booksPerShelf = 30;
-    library1.numShelves += numNewShelves;
-    library1.buyNewBooks(numNewShelves/booksPerShelf);
-}
-
-void University::hireAdditionalStaff(int numStaff)
-{
-    std::cout << "We have hired " << std::to_string(numStaff) << " additional people to help manage the library\n";
-}
-
 /*
  MAKE SURE YOU ARE NOT ON THE MASTER BRANCH
 
@@ -330,7 +336,46 @@ void University::hireAdditionalStaff(int numStaff)
 #include <iostream>
 int main()
 {
-    CPUTimer timer1;
-    University university1;
+    CentralProcessingUnit cpu1;
+    CPUCounter counter1;
+    CPUReset rst1;
+    Library library1;
+    Phone phone1;
+
+    std::cout << "UDF1 Counter:\n";
+    auto cnt = counter1.startCounter(0,15);
+    std::cout << "cnt.counter: " << cnt << std::endl;
+    counter1.returnCounterValue();
+    std::cout << "\n";
+    
+
+    std::cout << "UDF2 Reset:\n";
+    auto rst = rst1.reset();
+    std::cout << rst << std::endl;
+    rst1.printResetMessage();
+    std::cout << "\n";
+    
+    std::cout << "UDF3 CPU communication:\n";
+    cpu1.communicateWithRAM();
+    std::cout << "RAM Message: " << cpu1.ramMessage;
+    cpu1.communicateWithMotherboard();
+    std::cout << "Motherboard Message: " << cpu1.motherboardMessage;
+    std::cout << "\n";
+
+    std::cout << "UDF4 Library Actions:\n";
+    auto text = library1.checkOutBook();
+    std::cout << "Library Check out message: " << text;
+    library1.printCheckoutMessage();
+    auto msg = library1.buyNewBooks(30);
+    std::cout << "We now have " << msg << " books in our library" << std::endl;
+    library1.boughtNewBooks();
+    std::cout << "\n";
+
+    std::cout << "UDF5 Phone:\n";
+    auto status = phone1.dropPhone(false);
+    std::cout << "The phone screen is " << status << "\n";
+    phone1.printScreenStatus();
+
     std::cout << "good to go!" << std::endl;
+    return 0;
 }
