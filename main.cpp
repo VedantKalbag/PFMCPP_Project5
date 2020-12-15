@@ -197,11 +197,12 @@ struct Library
     float lateFees;
     std::string checkoutMessage;
 
-    void checkOutBook();
+    std::string checkOutBook();
     std::string returnBook();
     float chargeLateFee(float lateFee, int numDays);
 
     int buyNewBooks(int numNewBooks);
+    void printCheckoutMessage() {std::cout << this->checkoutMessage << "\n";}
     void boughtNewBooks() {std::cout << "We now have " << this->numBooks << " books in our library\n";}
 };
 
@@ -234,9 +235,9 @@ int Library::buyNewBooks (int numNewBooks) //While #2
     return numBooks;
 }
 
-void Library::checkOutBook()
+std::string Library::checkOutBook()
 {
-    std::cout << this->checkoutMessage;
+    return this->checkoutMessage;
 }
 
 std::string Library::returnBook()
@@ -300,7 +301,24 @@ void CPUTimer::resetTimer()
  with 2 member functions
  */
 
+struct Phone
+{
+    std::string screenStatus = "Not Broken";
+    std::string dropPhone (bool breakScreen = false);
 
+    void printScreenStatus() {std::cout << "The screen is " << this->screenStatus << "\n";}
+};
+
+std::string Phone::dropPhone (bool breakScreen)
+{
+    if (breakScreen)
+    {
+        this->screenStatus = "Broken";
+        return this->screenStatus;
+    }
+    this->screenStatus = "Not Broken";
+    return this->screenStatus;
+}
 /*
  MAKE SURE YOU ARE NOT ON THE MASTER BRANCH
 
@@ -321,38 +339,43 @@ int main()
     CentralProcessingUnit cpu1;
     CPUCounter counter1;
     CPUReset rst1;
-    
     Library library1;
+    Phone phone1;
 
-    std::cout << "Counter:\n";
+    std::cout << "UDF1 Counter:\n";
     auto cnt = counter1.startCounter(0,15);
     std::cout << "cnt.counter: " << cnt << std::endl;
     counter1.returnCounterValue();
     std::cout << "\n";
     
 
-    std::cout << "Reset:\n";
+    std::cout << "UDF2 Reset:\n";
     auto rst = rst1.reset();
     std::cout << rst << std::endl;
     rst1.printResetMessage();
     std::cout << "\n";
     
-    std::cout << "CPU communication:\n";
+    std::cout << "UDF3 CPU communication:\n";
     cpu1.communicateWithRAM();
     std::cout << "RAM Message: " << cpu1.ramMessage;
     cpu1.communicateWithMotherboard();
     std::cout << "Motherboard Message: " << cpu1.motherboardMessage;
     std::cout << "\n";
 
-    std::cout << "Library Actions:\n";
-    library1.checkOutBook();
-    std::cout << library1.checkoutMessage;
+    std::cout << "UDF4 Library Actions:\n";
+    auto text = library1.checkOutBook();
+    std::cout << "Library Check out message: " << text;
+    library1.printCheckoutMessage();
     auto msg = library1.buyNewBooks(30);
     std::cout << "We now have " << msg << " books in our library" << std::endl;
     library1.boughtNewBooks();
     std::cout << "\n";
 
-    std::cout << "good to go!" << std::endl;
+    std::cout << "UDF5 Phone:\n";
+    auto status = phone1.dropPhone(false);
+    std::cout << "The phone screen is " << status << "\n";
+    phone1.printScreenStatus();
 
+    std::cout << "good to go!" << std::endl;
     return 0;
 }
