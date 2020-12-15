@@ -116,6 +116,7 @@ struct CPUCounter //For #1
     CentralProcessingUnit cpu1;
     int counter;
     int startCounter(int initVal , int maxVal);
+    void returnCounterValue() { std::cout << "cnt.counter: " << this->cpu1.counter << std::endl;}
 };
 CPUCounter::CPUCounter()
 {
@@ -134,7 +135,8 @@ int CPUCounter::startCounter(int initVal, int maxVal)
         this->cpu1.counter = i; 
         //std::cout << this->cpu1.counter << "\n";
         if (cpu1.counter == maxVal)
-            std::cout << "CPU Counter Max Value: " << this->cpu1.counter << "\n";
+            //std::cout << "CPU Counter Max Value: " << this->cpu1.counter << "\n";
+            return this->cpu1.counter;
     }
     return this->cpu1.counter;
 }   
@@ -313,23 +315,27 @@ int main()
 
     auto cnt = counter1.startCounter(0,15);
     std::cout << "cnt.counter: " << cnt << std::endl;
-    
-    auto rst = rst1.reset();
-    std::cout << "Reset message: " << rst << std::endl;
-    
-    
-    std::cout << "CPU communication \n";
-    cpu1.communicateWithRAM();
-    cpu1.communicateWithMotherboard();
-    std::cout << "\n";
 
-    std::cout << "Library Actions: \n";
-    library1.checkOutBook();
-    std::cout << "\n";
+    counter1.returnCounterValue();
+    
 
-    auto msg = library1.buyNewBooks(30);
-    std::cout << msg << std::endl;
-    std::cout << "\n";
+
+    //auto rst = rst1.reset();
+    //std::cout << "Reset message: " << rst << std::endl;
+    
+    
+    //std::cout << "CPU communication \n";
+    //cpu1.communicateWithRAM();
+    //cpu1.communicateWithMotherboard();
+    //std::cout << "\n";
+
+    //std::cout << "Library Actions: \n";
+    //library1.checkOutBook();
+    //std::cout << "\n";
+
+    //auto msg = library1.buyNewBooks(30);
+    //std::cout << msg << std::endl;
+    //std::cout << "\n";
 
     std::cout << "good to go!" << std::endl;
 
