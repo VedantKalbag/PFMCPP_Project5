@@ -150,6 +150,7 @@ struct CPUReset //While #1
 
     CentralProcessingUnit cpu1;
     std::string reset();
+    void printResetMessage() {std::cout << "The CPU has been reset, it has been " + std::to_string(this->cpu1.resetTimer) + " seconds\n";}
 };
 
 CPUReset::CPUReset()
@@ -168,9 +169,9 @@ std::string CPUReset::reset()
     while (i < 10)
     {
         cpu1.resetTimer += 1;
-        std::cout << "It has been " << this->cpu1.resetTimer << " second(s) since reset was initiated" << std::endl;
+        //std::cout << "It has been " << this->cpu1.resetTimer << " second(s) since reset was initiated" << std::endl;
         if (cpu1.resetTimer == 10)
-            return "The CPU has been reset";
+            return "The CPU has been reset, it has been " + std::to_string(this->cpu1.resetTimer) + " seconds";
     }
     return "Error while resetting";
 }
@@ -313,18 +314,18 @@ int main()
     
     Library library1;
 
+    std::cout << "Counter:\n";
     auto cnt = counter1.startCounter(0,15);
     std::cout << "cnt.counter: " << cnt << std::endl;
-
     counter1.returnCounterValue();
     
 
-
-    //auto rst = rst1.reset();
-    //std::cout << "Reset message: " << rst << std::endl;
+    std::cout << "Reset:\n";
+    auto rst = rst1.reset();
+    std::cout << rst << std::endl;
+    rst1.printResetMessage();
     
-    
-    //std::cout << "CPU communication \n";
+    std::cout << "CPU communication:\n";
     //cpu1.communicateWithRAM();
     //cpu1.communicateWithMotherboard();
     //std::cout << "\n";
