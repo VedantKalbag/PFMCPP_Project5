@@ -195,12 +195,14 @@ struct Library
     int numShelves;
     int numBooks;
     float lateFees;
+    std::string checkoutMessage;
 
     void checkOutBook();
     std::string returnBook();
     float chargeLateFee(float lateFee, int numDays);
 
-    std::string buyNewBooks(int numNewBooks);
+    int buyNewBooks(int numNewBooks);
+    void boughtNewBooks() {std::cout << "We now have " << this->numBooks << " books in our library\n";}
 };
 
 Library::Library()
@@ -210,6 +212,7 @@ Library::Library()
     numShelves = 50;
     numBooks = 3000;
     lateFees = 2.5f;
+    checkoutMessage = "Enjoy your book\n";
 }
 
 Library::~Library()
@@ -217,22 +220,23 @@ Library::~Library()
     //std::cout << "Library Destructor\n";
 }
 
-std::string Library::buyNewBooks (int numNewBooks) //While #2
+int Library::buyNewBooks (int numNewBooks) //While #2
 {
     int i = 0;
     while (i < numNewBooks + 1)
     { 
         if (i == numNewBooks)
-            return "We have bought " + std::to_string(numNewBooks) + " new books for our library\n" + "We now have " + std::to_string(numBooks) + " books in our library\n";
-        numBooks++;
+            return numBooks;
+        this->numBooks++;
         i++;
     }
-    return "We didn't buy enough books";
+    //this->numBooks += numNewBooks;
+    return numBooks;
 }
 
 void Library::checkOutBook()
 {
-    std::cout << "Enjoy your book\n";
+    std::cout << this->checkoutMessage;
 }
 
 std::string Library::returnBook()
@@ -335,18 +339,18 @@ int main()
     
     std::cout << "CPU communication:\n";
     cpu1.communicateWithRAM();
-    std::cout << cpu1.ramMessage;
+    std::cout << "RAM Message: " << cpu1.ramMessage;
     cpu1.communicateWithMotherboard();
-    std::cout << cpu1.motherboardMessage;
+    std::cout << "Motherboard Message: " << cpu1.motherboardMessage;
     std::cout << "\n";
 
-    //std::cout << "Library Actions: \n";
-    //library1.checkOutBook();
-    //std::cout << "\n";
-
-    //auto msg = library1.buyNewBooks(30);
-    //std::cout << msg << std::endl;
-    //std::cout << "\n";
+    std::cout << "Library Actions:\n";
+    library1.checkOutBook();
+    std::cout << library1.checkoutMessage;
+    auto msg = library1.buyNewBooks(30);
+    std::cout << "We now have " << msg << " books in our library" << std::endl;
+    library1.boughtNewBooks();
+    std::cout << "\n";
 
     std::cout << "good to go!" << std::endl;
 
